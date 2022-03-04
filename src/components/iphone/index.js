@@ -2,11 +2,10 @@
 import { h, render, Component } from 'preact';
 // import stylesheets for ipad & button
 import style from './style';
-import style_iphone from '../button/style_iphone';
 // import jquery for API calls
 import $ from 'jquery';
 // import the Button component
-import Button from '../button';
+import Card from "../card";
 
 export default class Iphone extends Component {
 //var Iphone = React.createClass({
@@ -38,19 +37,13 @@ export default class Iphone extends Component {
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
-		
+
 		// display all weather data
 		return (
 			<div class={ style.container }>
-				<div class={ style.header }>
-					<div class={ style.city }>{ this.state.locate }</div>
-					<div class={ style.conditions }>{ this.state.cond }</div>
-					<span class={ tempStyles }>{ this.state.temp }</span>
-				</div>
-				<div class={ style.details }></div>
-				<div class= { style_iphone.container }> 
-					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.fetchWeatherData }/ > : null }
-				</div>
+				<Card />
+				<Card />
+				<Card />
 			</div>
 		);
 	}
@@ -65,6 +58,6 @@ export default class Iphone extends Component {
 			locate: location,
 			temp: temp_c,
 			cond : conditions
-		});      
+		});
 	}
 }
