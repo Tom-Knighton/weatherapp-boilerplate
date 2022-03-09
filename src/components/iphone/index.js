@@ -7,6 +7,7 @@ import style_iphone from '../button/style_iphone';
 import $ from 'jquery';
 // import the Button component
 import Button from '../button';
+import APIClient from '../../lib/APIClient';
 
 export default class Iphone extends Component {
 //var Iphone = React.createClass({
@@ -18,21 +19,10 @@ export default class Iphone extends Component {
 		this.state.temp = "";
 		// button display state
 		this.setState({ display: true });
+
+		console.log(APIClient.fetchWeatherForLocation('London'));
 	}
 
-	// a call to fetch weather data via wunderground
-	fetchWeatherData = () => {
-		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		let url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=cf17e23b1d108b29a4d738d2084baf5";
-		$.ajax({
-			url: url,
-			dataType: "jsonp",
-			success : this.parseResponse,
-			error : function(req, err){ console.log('API call failed ' + err); }
-		});
-		// once the data grabbed, hide the button
-		this.setState({ display: false });
-	}
 
 	// the main render method for the iphone component
 	render() {
