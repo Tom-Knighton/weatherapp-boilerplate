@@ -23,13 +23,13 @@ export default class Iphone extends Component {
 	// a call to fetch weather data via wunderground
 	fetchWeatherData = () => {
 		// API URL with a structure of : ttp://api.wunderground.com/api/key/feature/q/country-code/city.json
-		var url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=cf17e23b1d108b29a4d738d2084baf5";
+		let url = "http://api.openweathermap.org/data/2.5/weather?q=London&units=metric&APPID=cf17e23b1d108b29a4d738d2084baf5";
 		$.ajax({
 			url: url,
 			dataType: "jsonp",
 			success : this.parseResponse,
 			error : function(req, err){ console.log('API call failed ' + err); }
-		})
+		});
 		// once the data grabbed, hide the button
 		this.setState({ display: false });
 	}
@@ -38,7 +38,7 @@ export default class Iphone extends Component {
 	render() {
 		// check if temperature data is fetched, if so add the sign styling to the page
 		const tempStyles = this.state.temp ? `${style.temperature} ${style.filled}` : style.temperature;
-		
+
 		// display all weather data
 		return (
 			<div class={ style.container }>
@@ -48,23 +48,23 @@ export default class Iphone extends Component {
 					<span class={ tempStyles }>{ this.state.temp }</span>
 				</div>
 				<div class={ style.details }></div>
-				<div class= { style_iphone.container }> 
-					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.fetchWeatherData }/ > : null }
+				<div class= { style_iphone.container }>
+					{ this.state.display ? <Button class={ style_iphone.button } clickFunction={ this.fetchWeatherData }/> : null }
 				</div>
 			</div>
 		);
 	}
 
 	parseResponse = (parsed_json) => {
-		var location = parsed_json['name'];
-		var temp_c = parsed_json['main']['temp'];
-		var conditions = parsed_json['weather']['0']['description'];
+		let location = parsed_json['name'];
+		let temp_c = parsed_json['main']['temp'];
+		let conditions = parsed_json['weather']['0']['description'];
 
 		// set states for fields so they could be rendered later on
 		this.setState({
 			locate: location,
 			temp: temp_c,
 			cond : conditions
-		});      
+		});
 	}
 }
