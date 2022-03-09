@@ -2,11 +2,7 @@
 import { h, render, Component } from "preact";
 // import stylesheets for ipad & button
 import style from "./style";
-import style_iphone from "../button/style_iphone";
-// import jquery for API calls
-import $ from "jquery";
 // import the Button component
-import Button from "../button";
 import APIClient from "../../lib/APIClient";
 import Card from "../card";
 
@@ -22,6 +18,10 @@ export default class Iphone extends Component {
 		this.setState({ display: true });
 
 		APIClient.fetchWeatherForLocation("London").then((data) => { console.log(data); });
+		APIClient.fetchForecastForLocation("London", 10).then((data) => { console.log(data); });
+		APIClient.searchForLocation("London").then((data) => { console.log(data); });
+		APIClient.getAstronomyData("London").then((data) => { console.log(data); });
+		APIClient.getSportData("London").then((data) => { console.log(data); });
 	}
 
 	// the main render method for the iphone component
