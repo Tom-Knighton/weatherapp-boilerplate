@@ -29,9 +29,9 @@ export default class Iphone extends Component {
 		// display all weather data
 		return (
 			<div class={style.container}>
-				<Card/>
-				<Card/>
-				<Card/>
+				<Card><div><p>Test 1!</p></div></Card>
+				<Card>Test 2</Card>
+				<Card>Test 3</Card>
 			</div>
 		);
 	}
