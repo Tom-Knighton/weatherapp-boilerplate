@@ -34,6 +34,29 @@ export default class Iphone extends Component {
 	}
 
 	rainToday(){
+
+		let twelveHourCount = 0
+		//starting from the current hour, grab the next twelve hours and report if and when the next rain will come.
+		//
+		for (let checkHour = hour; checkHour <= 23; checkHour ++){
+
+			//console.log("loop", todaysForecast[checkHour] );
+			let forecastHour = todaysForecast[checkHour];
+			if (forecastHour.will_it_rain){
+				if (twelveHourCount == 0){
+					//rain within the hour
+					return <p class = {style.rightRainForcast}>PLACEHOLDER Rain within 1 hour</p>;
+				}
+			return <p class = {style.rightRainForcast}>PLACEHOLDER Rain will arrive in {twelveHourCount} hours</p>;
+			}
+
+			if (twelveHourCount == 12){
+				return <p class = {style.rightRainForcast}>PLACEHOLDER No rain expected in the next 12 hours</p>;
+			}
+			twelveHourCount ++;
+
+		}
+
 			//grab the bit of the forecast we care about
 			console.log(this.state.forecast, typeof(this.state.forecast))
 
