@@ -59,6 +59,7 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 					!hasSeenDifferentWeather &&
 					forecast.condition.code === this.state.currentWeather.condition.code
 				) {
+                    hasSeenDifferentWeather = true;
 					return; // Ignore all forecast data that is the same as our current conditions, if we haven't seen any different yet
 				}
 
