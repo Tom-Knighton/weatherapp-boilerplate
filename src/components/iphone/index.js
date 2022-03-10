@@ -18,52 +18,34 @@ export default class Iphone extends Component {
 		this.setState({ display: true });
 
 		APIClient.fetchWeatherForLocation("London").then((data) => {
+			console.log("CURRENT",data)
 			this.setState({date: data.location.localtime})
 			this.setState({currentTemp: data.current.temp_c});
 			this.setState({currentIcon: "https://".concat(data.current.condition.icon)})
 
 		 });
 		APIClient.fetchForecastForLocation("London", 10).then((data) => {
-			console.log("TYPE",typeof(data))
+			console.log("FORECAST",data)
 			this.setState({forecast: data.forecast.forecastday})
 
 		});
-		APIClient.searchForLocation("London").then((data) => { console.log(data); });
-		APIClient.getAstronomyData("London").then((data) => { console.log(data); });
-		APIClient.getSportData("London").then((data) => { console.log(data); });
+		APIClient.searchForLocation("London").then((data) => { console.log("LOCATION",data); });
+		APIClient.getAstronomyData("London").then((data) => { console.log("ASTRONOMY",data); });
+		APIClient.getSportData("London").then((data) => { console.log("SPORTS",data); });
 	}
 
 	rainToday(){
 
 		let twelveHourCount = 0
 		//starting from the current hour, grab the next twelve hours and report if and when the next rain will come.
-		//
-
-
-
-		if (twelveHourCount == 0){
-					//rain within the hour
-				return <p class = {style.rightRainForcast}>PLACEHOLDER Rain within 1 hour</p>;
-		}
-		return <p class = {style.rightRainForcast}>PLACEHOLDER Rain will arrive in {twelveHourCount} hours</p>;
-
-
-
-
 
 			//grab the bit of the forecast we care about
-			console.log(this.state.forecast, typeof(this.state.forecast))
-
-			let tempy = Object.entries(this.state.forecast)
-			console.log("T",tempy)
-			let todaysForecast = tempy[0];
-
-
-
+			let todaysForecast = this.state.forecast[0];
 			todaysForecast = todaysForecast.hour;
 			console.log("FORECAST",todaysForecast);
 
-					// split day and time of now.
+			// figure out what time to start from
+
 			let nowDayTimeArray = this.state.date;
 			nowDayTimeArray = nowDayTimeArray.split(" ");
 
@@ -75,25 +57,28 @@ export default class Iphone extends Component {
 
 			}
 
-			hour = 0;
+			let returnforecastHour = todaysForecast[hour]
 
 			//let twelveHourCount = 0
 			//starting from the current hour, grab the next twelve hours and report if and when the next rain will come.
 			//
+			let currentCondition = todaysForecast[hour].condition.text
 			for (let checkHour = hour; checkHour <= 23; checkHour ++){
 
 				//console.log("loop", todaysForecast[checkHour] );
 				let forecastHour = todaysForecast[checkHour];
-				if (forecastHour.will_it_rain){
-					if (twelveHourCount == 0){
+				console.log("EQUALS",currentCondition,forecastHour.condition.text)
+				if (currentCondition !== forecastHour.condition.text){
+					if (twelveHourCount == 0 || twelveHourCount == 1){
 						//rain within the hour
-						return <p class = {style.rightRainForcast}>Rain within 1 hour</p>;
+						return <p class = {style.rightRainForcast}>will be {forecastHour.condition.text} within the hour</p>;
 					}
-				return <p class = {style.rightRainForcast}>Rain will arrive in {twelveHourCount} hours</p>;
+				return <p class = {style.rightRainForcast}> will be {forecastHour.condition.text}  in {twelveHourCount} hours</p>;
 				}
 
 				if (twelveHourCount == 12){
-					return <p class = {style.rightRainForcast}>No rain expected in the next 12 hours</p>;
+					//The next twelve hours will be the same.
+					return <p class = {style.rightRainForcast}>Will be {currentCondition} for today</p>;
 				}
 				twelveHourCount ++;
 
@@ -119,7 +104,7 @@ export default class Iphone extends Component {
 				<div>
 					<img src ={this.state.currentIcon} alt = "Image borked" class = {style.leftIcon}></img>
 						<h1>{this.state.currentTemp}°C</h1>
-						{this.rainToday()}
+						{this.state.forecast &&this.state.date && this.rainToday()}
 
 				</div></Card>
 				<Card>Test 2</Card>
