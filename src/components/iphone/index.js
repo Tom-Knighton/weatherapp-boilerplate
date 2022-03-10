@@ -5,6 +5,7 @@ import style from "./style";
 // import the Button component
 import APIClient from "../../lib/APIClient";
 import Card from "../card";
+import { UpcomingWeatherFeaturesCard } from "../homeCards";
 
 export default class Iphone extends Component {
 	//var Iphone = React.createClass({
@@ -107,7 +108,7 @@ export default class Iphone extends Component {
 						{this.state.forecast &&this.state.date && this.rainToday()}
 
 				</div></Card>
-				<Card>Test 2</Card>
+				<UpcomingWeatherFeaturesCard/>
 				<Card>Test 3</Card>
 				<Card>Test 4</Card>
 				<Card>Test 5</Card>
