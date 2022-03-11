@@ -47,16 +47,7 @@ export default class Iphone extends Component {
 
 			// figure out what time to start from
 
-			let nowDayTimeArray = this.state.date;
-			nowDayTimeArray = nowDayTimeArray.split(" ");
-
-			let hour = nowDayTimeArray[1];
-			hour = hour.split(":");
-			hour = hour[0];
-			if (parseInt(hour) + 12 > 23){
-					console.log("Need to check next day as well");
-
-			}
+			let hour = (new Date()).getHours()
 
 			let returnforecastHour = todaysForecast[hour]
 
@@ -72,14 +63,14 @@ export default class Iphone extends Component {
 				if (currentCondition !== forecastHour.condition.text){
 					if (twelveHourCount == 0 || twelveHourCount == 1){
 						//rain within the hour
-						return <p class = {style.rightRainForcast}>will be {forecastHour.condition.text} within the hour</p>;
+						return <p class = {style.rightRainForcast}>{forecastHour.condition.text} <br></br> 1 hour</p>;
 					}
-				return <p class = {style.rightRainForcast}> will be {forecastHour.condition.text}  in {twelveHourCount} hours</p>;
+				return <p class = {style.rightRainForcast}> {forecastHour.condition.text}  {twelveHourCount} hours</p>;
 				}
 
 				if (twelveHourCount == 12){
 					//The next twelve hours will be the same.
-					return <p class = {style.rightRainForcast}>Will be {currentCondition} for today</p>;
+					return <p class = {style.rightRainForcast}>{currentCondition}  <br></br> All today</p>;
 				}
 				twelveHourCount ++;
 
