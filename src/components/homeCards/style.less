@@ -1,3 +1,12 @@
+/* Removing scrollbar while keeping scroll functionality */
+* {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+*::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
 .container {
     padding: 0;
     margin: 0;
@@ -10,13 +19,11 @@
     justify-items: start;
     align-items: start;
 }
-
 h3 {
     font-weight: bold;
     padding: 0px;
     margin-bottom: 5px;
 }
-
 .upcomingList {
     display: flex;
     flex-direction: column;
@@ -26,22 +33,16 @@ h3 {
     align-items: start;
     margin-bottom: 15px;
 }
-
 .upcomingList p {
     margin-top: 5px;
     margin-bottom: 5px;
 }
-
-
-
-
 .horizontal {
     display: flex;
     flex-direction: row;
     gap: 15px;
     overflow-x: auto;
 }
-
 .row {
     display: flex;
     flex-direction: column;
@@ -50,3 +51,7 @@ h3 {
     align-content: center;
     justify-items: center;
   }
+.gridContainer{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
