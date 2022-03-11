@@ -3,26 +3,34 @@ import $ from "jquery";
 const baseUrl = "https://api.weatherapi.com/v1";
 const apiKey = "4fd48e8a399548589a9172904210405";
 
+let locationData = null;
+
 export default {
 	fetchWeatherForLocation(locationName) {
 		return new Promise((resolve, reject) => {
-			$.ajax({
-				url: `${baseUrl}/current.json?q=${locationName}&yes=no&key=${apiKey}`,
-				dataType: "json",
-				success: (data) => resolve(data),
-				error: (error) => reject(error)
-			});
+			this.getLocation().then(loc => {
+				locationName = locationName ? locationName : loc.name;
+				$.ajax({
+					url: `${baseUrl}/current.json?q=${locationName}&aqi=no&key=${apiKey}`,
+					dataType: "json",
+					success: (data) => resolve(data),
+					error: (error) => reject(error)
+				});
+			})
 		});
 	},
 
-	fetchForecastForLocation(locationName, days = 10) {
+	fetchForecastForLocation(days = 10, locationName = null) {
 		return new Promise((resolve, reject) => {
-			$.ajax({
-				url: `${baseUrl}/forecast.json?q=${locationName}&aqi=yes&alerts=no&days=10&key=${apiKey}`,
-				dataType: "json",
-				success: (data) => resolve(data),
-				error: (error) => reject(error)
-			});
+			this.getLocation().then(loc => {
+				locationName = locationName ? locationName : loc.name;
+				$.ajax({
+					url: `${baseUrl}/forecast.json?q=${locationName}&aqi=yes&alerts=no&days=${days}&key=${apiKey}`,
+					dataType: "json",
+					success: (data) => resolve(data),
+					error: (error) => reject(error)
+				});
+			})
 		});
 	},
 
@@ -56,6 +64,34 @@ export default {
 				success: (data) => resolve(data),
 				error: (error) => reject(error)
 			});
+		});
+	},
+
+	getLocation() {
+		return new Promise((resolve, reject) => {
+
+			if (this.locationData) {
+				resolve(this.locationData);
+			}
+
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition((pos) => {
+					const lat = pos.coords.latitude;
+					const lon = pos.coords.longitude;
+
+					$.ajax({
+						url: `${baseUrl}/current.json?q=${lat},${lon}&aqi=no&key=${apiKey}`,
+						dataType: "json",
+						success: (data) => {
+							this.locationData = { lat, lon, name: data.location.name };
+							resolve(this.locationData);
+						}
+					});
+				});
+			}
+			else {
+				reject('No location permissions');
+			}
 		});
 	}
 };
