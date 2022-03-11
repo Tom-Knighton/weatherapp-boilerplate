@@ -5,7 +5,7 @@ import style from "./style";
 // import the Button component
 import APIClient from "../../lib/APIClient";
 import Card from "../card";
-import { UpcomingWeatherFeaturesCard } from "../homeCards";
+import {HourlyForecast,  UpcomingWeatherFeaturesCard } from "../homeCards";
 
 export default class Iphone extends Component {
 	//var Iphone = React.createClass({
@@ -109,7 +109,7 @@ export default class Iphone extends Component {
 
 				</div></Card>
 				<UpcomingWeatherFeaturesCard/>
-				<Card>Test 3</Card>
+				<HourlyForecast/>
 				<Card>Test 4</Card>
 				<Card>Test 5</Card>
 			</div>
