@@ -33,36 +33,40 @@ export default class HourlyForecast extends Component {
 	}
 
 	//returns future hours
-	theHour() {
+	theHour(toAdd) {
 		const hour = (new Date()).getHours();
+		let thisHour = hour
+		thisHour = hour + toAdd
 
-		if (hour > 12 && hour < 24) {
-			return <h3>{hour - 12}pm</h3>;
+		if (thisHour > 12 && thisHour < 24) {
+			return <h3>{thisHour - 12}pm</h3>;
 		}
 
-		if (hour == 0) {
+		if (thisHour == 0) {
 			return <h3>{12}am</h3>;
 		}
-		if (hour == 12) {
-			return <h3>{hour}pm</h3>;
+		if (thisHour == 12) {
+			return <h3>{thisHour}pm</h3>;
 		}
-		if (hour < 12) {
-			return <h3>{hour}am</h3>;
+		if (thisHour < 12) {
+			return <h3>{thisHour}am</h3>;
 		}
-		return <h3>{hour - 24}am</h3>;
+		return <h3>{thisHour - 24}am</h3>;
 	}
 
 	//returns hour for appropriate icon
-	hourForIcon() {
+	hourForIcon(toAdd) {
 
 		const hour = new Date().getHours();
+		let thisHour = hour
+		thisHour = hour + toAdd
 
 		//greater than 24 means next day: to do
-		if (hour > 24) {
-			return hour - 12;
+		if (thisHour > 24) {
+			return thisHour - 12;
 		}
 
-		return hour;
+		return thisHour;
 	}
 	//greater than 24 means next day: to do
 	theIcon(toAdd) {
