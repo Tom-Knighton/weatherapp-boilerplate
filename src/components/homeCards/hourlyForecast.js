@@ -10,17 +10,8 @@ export default class HourlyForecast extends Component {
 		APIClient.fetchForecastForLocation().then((data) => {
 			this.setState({
 				icon2: data.forecast.forecastday[0],
-				icon3: "https://".concat(
-					data.forecast.forecastday[0].hour[2].condition.icon
-				),
-				icon4: "https://".concat(
-					data.forecast.forecastday[0].hour[3].condition.icon
-				),
-				icon5: "https://".concat(
-					data.forecast.forecastday[0].hour[4].condition.icon
-				),
-				time2: data.forecast.forecastday[0].hour[1].time,
-				time3: data.forecast.forecastday[0].hour[3].time,
+				nextDayIcon: data.forecast.forecastday[1],
+				
 			});
 		});
 
@@ -38,15 +29,16 @@ export default class HourlyForecast extends Component {
 		let thisHour = hour
 		thisHour = hour + toAdd
 
-		if (thisHour > 12 && thisHour < 24) {
-			return <h3>{thisHour - 12}pm</h3>;
-		}
+		
 
-		if (thisHour == 0) {
+		if (thisHour == 24) {
 			return <h3>{12}am</h3>;
 		}
 		if (thisHour == 12) {
 			return <h3>{thisHour}pm</h3>;
+		}
+		if (thisHour > 12 && thisHour < 24) {
+			return <h3>{thisHour - 12}pm</h3>;
 		}
 		if (thisHour < 12) {
 			return <h3>{thisHour}am</h3>;
@@ -57,26 +49,46 @@ export default class HourlyForecast extends Component {
 	//returns hour for appropriate icon
 	hourForIcon(toAdd) {
 
-		const hour = new Date().getHours();
+		let hour = new Date().getHours();
 		let thisHour = hour
-		thisHour = hour + toAdd
+		thisHour = thisHour + toAdd
 
-		//greater than 24 means next day: to do
-		if (thisHour > 24) {
-			return thisHour - 12;
-		}
+		
+		
 
 		return thisHour;
 	}
-	//greater than 24 means next day: to do
+	//greater than 24 means next day
 	theIcon(toAdd) {
 
         let number = this.hourForIcon(toAdd);
 
-        if (!this.state.icon2.hour[number]) {
-            return;
-        }
+        
+		if (number >= 24) {
+			
+			number = number - 24
 
+			if (!this.state.nextDayIcon.hour[number]) {
+				return;
+			}
+			if (!this.state.icon2.hour[number]) {
+				return;
+			}
+			
+			return (
+				<img
+					src={"https://".concat(this.state.nextDayIcon.hour[number].condition.icon)}
+					alt="error"
+				></img>
+			);
+		}
+
+		if (!this.state.nextDayIcon.hour[number]) {
+			return;
+		}
+		if (!this.state.icon2.hour[number]) {
+			return;
+		}
 
 		return (
 			<img
@@ -89,7 +101,7 @@ export default class HourlyForecast extends Component {
 	render() {
 		return (
 			<Card>
-				{this.state.icon2 && (
+				{(this.state.icon2 && this.state.nextDayIcon) && (
 					<div class={style.horizontal}>
 						<div class={style.row}>
 							<h3>Now</h3>
@@ -98,22 +110,22 @@ export default class HourlyForecast extends Component {
 
 						<div class={style.row}>
 							{this.state.date && this.theHour(1)}
-							{this.state.icon2 && this.theIcon(1)}
+							{(this.state.icon2 || this.state.nextDayIcon) && this.theIcon(1)}
 						</div>
 
 						<div class={style.row}>
 							{this.state.date && this.theHour(2)}
-							{this.state.icon2 && this.theIcon(2)}
+							{(this.state.icon2 || this.state.nextDayIcon) && this.theIcon(2)}
 						</div>
 
 						<div class={style.row}>
 							{this.state.date && this.theHour(3)}
-							{this.state.icon2 && this.theIcon(3)}
+							{(this.state.icon2 || this.state.nextDayIcon) && this.theIcon(3)}
 						</div>
 
 						<div class={style.row}>
 							{this.state.date && this.theHour(4)}
-							{this.state.icon2 && this.theIcon(4)}
+							{(this.state.icon2 || this.state.nextDayIcon) && this.theIcon(4)}
 						</div>
 					</div>
 				)}
