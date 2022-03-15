@@ -5,6 +5,12 @@ import Card from "../card";
 
 export default class TopCard extends Component {
 	constructor(props) {
+		/*Top card of start up page displays:
+			Image representing current condition: pulled directly from APIClient
+			Current temperature
+			A prediction for the next change in weather
+		*/
+
 		super(props);
 
     APIClient.fetchWeatherForLocation().then((data) => {
@@ -23,6 +29,8 @@ export default class TopCard extends Component {
   }
 
   rainToday() {
+		//Function purpose: Caculates the next change in weather, and returns what it will change too, and how long until that happens.
+		//Returns an html object containing this information
 
     if (!this.state.forecast) {
       return;
@@ -31,26 +39,31 @@ export default class TopCard extends Component {
     let twelveHourCount = 0;
     //starting from the current hour, grab the next twelve hours and report if and when the next rain will come.
 
-    //grab the bit of the forecast we care about
+    //grab the bits of the forecast we care about, the list of weather predictions by hour for the day.
     let todaysForecast = this.state.forecast[0];
     todaysForecast = todaysForecast.hour;
 
+		let tomorrowsForecast = this.state.forecast[1];
+		tomorrowsForecast = tomorrowsForecast.hour;
+
     // figure out what time to start from
-
     let hour = new Date().getHours();
-
-    let returnforecastHour = todaysForecast[hour];
-
-    //let twelveHourCount = 0
     //starting from the current hour, grab the next twelve hours and report if and when the next rain will come.
     //
     let currentCondition = todaysForecast[hour].condition.text;
-    for (let checkHour = hour; checkHour <= 23; checkHour++) {
-      //console.log("loop", todaysForecast[checkHour] );
-      let forecastHour = todaysForecast[checkHour];
+    for (let checkHour = hour; checkHour <= 32; checkHour++) {
+			let forecastHour;
+
+			if (checkHour > 23){
+				forecastHour = tomorrowsForecast[checkHour-24];
+			}
+			else{
+      	forecastHour = todaysForecast[checkHour];
+			}
+
       if (currentCondition !== forecastHour.condition.text) {
         if (twelveHourCount == 0 || twelveHourCount == 1) {
-          //rain within the hour
+          //weather change within the hour
           return (
             <p class={style.rightRainForcast}>
               {forecastHour.condition.text} <br></br> 1 hour
@@ -73,11 +86,8 @@ export default class TopCard extends Component {
           </p>
         );
       }
+
       twelveHourCount++;
-    }
-    for (let checkHour = 0; checkHour <= 12; checkHour++) {
-      //Check the remaining 12 hours for rain, searching the next day
-      return "NOTYETDONE";
     }
   }
 
