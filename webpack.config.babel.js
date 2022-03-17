@@ -54,7 +54,7 @@ module.exports = {
 			{
 				// Transform our own .(less|css) files with PostCSS and CSS-modules
 				test: /\.(less|css)$/,
-				include: [path.resolve(__dirname, 'src/components')],
+				include: [path.resolve(__dirname, 'src/components'), path.resolve(__dirname, 'src/pages')],
 				loader: ExtractTextPlugin.extract('style?singleton', [
 					`css-loader?modules&importLoaders=1&sourceMap=${CSS_MAPS}`,
 					'postcss-loader',
@@ -63,7 +63,7 @@ module.exports = {
 			},
 			{
 				test: /\.(less|css)$/,
-				exclude: [path.resolve(__dirname, 'src/components')],
+				exclude: [path.resolve(__dirname, 'src/components'), path.resolve(__dirname, 'src/pages')],
 				loader: ExtractTextPlugin.extract('style?singleton', [
 					`css?sourceMap=${CSS_MAPS}`,
 					`postcss`,
@@ -128,7 +128,7 @@ module.exports = {
 				negate_iife: false
 			}
 		}),
-		
+
 		// strip out babel-helper invariant checks
 		new ReplacePlugin([{
 			// this is actually the property name https://github.com/kimhou/replace-bundle-webpack-plugin/issues/1
