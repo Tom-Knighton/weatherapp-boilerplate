@@ -38,7 +38,25 @@ export class SearchCondition extends Component {
         //console.log(event.target.value);
 
         this.setState({day: event.target.value});
+       
+        let current = new Date();
+        let maxDate = new Date();
+        maxDate.setDate(current.getDate() + 7)
+
+        //let currentDateString = `"${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}"`;
+        //let maxDateString = `"${current.getFullYear()}-${current.getMonth()+1}-${current.getDate() + 7}"`;
+
+        
+
+        let stateDate = new Date(this.state.day)
+
+        if(stateDate.getTime() > maxDate.getTime() || stateDate.getTime() < current.getTime()){
+            alert('Invalid Date! :(');
+        }
+            
     }
+
+    
 
 
 
