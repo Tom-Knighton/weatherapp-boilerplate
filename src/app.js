@@ -3,6 +3,7 @@ import { h, Component } from "preact";
 import Router from "preact-router";
 import SwipeableViews from "react-swipeable-views/lib/SwipeableViews";
 import HomePage from "./pages/HomePage";
+import { SearchCondition } from "./pages/SearchCondition";
 import { TestPage, TestSubPage } from "./pages/TestPage";
 
 // import required Components from 'components/'
@@ -24,7 +25,7 @@ export default class App extends Component {
 				<div class="container">
 					<Router>
 						<SwipeableViews path="/" index={1} enableMouseEvents={true}>
-							<TestPage pageNum="1" />
+							<SearchCondition />
 							<HomePage />
 							<TestPage pageNum="2" />
 						</SwipeableViews>
