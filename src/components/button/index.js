@@ -1,5 +1,6 @@
 // import preact
 import { h, render, Component } from 'preact';
+import style from "./style";
 
 export default class Button extends Component {
 
@@ -13,7 +14,7 @@ export default class Button extends Component {
 		}
 		return (
 			<div>
-				<button onClick={cFunction}>
+				<button onClick={cFunction} className={style.customButton}>
 					Display Weather
 				</button>
 			</div>

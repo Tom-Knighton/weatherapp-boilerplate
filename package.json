@@ -74,9 +74,9 @@
   },
   "dependencies": {
     "caniuse-db": "^1.0.30001317",
-    "preact": "^6.0.0",
-    "preact-compat": "^3.0.0",
-    "preact-router": "^2.0.0",
+    "mapbox-gl": "^2.7.1",
+    "preact": "^10.0.0",
+    "preact-router": "^3.0.0",
     "promise-polyfill": "^6.0.2",
     "proptypes": "^0.14.3",
     "react-swipeable-views": "^0.14.0",

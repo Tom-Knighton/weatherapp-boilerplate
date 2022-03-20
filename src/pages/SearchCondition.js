@@ -25,7 +25,9 @@ export class SearchCondition extends Component {
             forecast: data.forecast,
 
           });
+          console.log(this.state.forecast);
         });
+
 
     }
 
