@@ -67,14 +67,26 @@ export default {
 		});
 	},
 
-	getLocation() {
+	getLocation(lat = null, lon = null) {
+		console.log('running for ' + lat + ' ' + lon);
 		return new Promise((resolve, reject) => {
 
-			if (this.locationData) {
+			if (lat && lon) {
+				$.ajax({
+					url: `${baseUrl}/current.json?q=${lat},${lon}&aqi=no&key=${apiKey}`,
+					dataType: "json",
+					success: (data) => {
+						// this.locationData = { lat, lon, name: data.location.name };
+						resolve({ lat, lon, name: data.location.name, time: data.location.localtime});
+					}
+				});
+			}
+
+			else if (!lat && !lon && this.locationData) {
 				resolve(this.locationData);
 			}
 
-			if (navigator.geolocation) {
+			else if (navigator.geolocation) {
 				navigator.geolocation.getCurrentPosition((pos) => {
 					const lat = pos.coords.latitude;
 					const lon = pos.coords.longitude;
@@ -83,13 +95,13 @@ export default {
 						url: `${baseUrl}/current.json?q=${lat},${lon}&aqi=no&key=${apiKey}`,
 						dataType: "json",
 						success: (data) => {
-							this.locationData = { lat, lon, name: data.location.name };
+							this.locationData = { lat, lon, name: data.location.name, time: data.location.localtime};
 							resolve(this.locationData);
 						}
 					});
 				});
 			}
-			else {
+			else if (lat && lon) {
 				reject('No location permissions');
 			}
 		});
