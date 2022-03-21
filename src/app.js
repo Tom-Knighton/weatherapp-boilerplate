@@ -31,6 +31,7 @@ export default class App extends Component {
 							<SearchMap/>
 						</SwipeableViews>
 						<TestSubPage path="/subpage/:pageNum"/>
+						<HomePage path="/place/:lat/:lon"/>
 					</Router>
 				</div>
 			</div>

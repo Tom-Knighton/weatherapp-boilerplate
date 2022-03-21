@@ -7,7 +7,7 @@ export default class HourlyForecast extends Component {
 	constructor(props) {
 		super(props);
 
-		APIClient.fetchForecastForLocation().then((data) => {
+		APIClient.fetchForecastForLocation(3, this.props.loc).then((data) => {
 			this.setState({
 				icon2: data.forecast.forecastday[0],
 				nextDayIcon: data.forecast.forecastday[1]

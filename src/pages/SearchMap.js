@@ -1,4 +1,5 @@
 import { h, render, Component } from "preact";
+import { route } from "preact-router";
 import Button from "../components/button";
 import { MapComponent } from "../components/map";
 import APIClient from "../lib/APIClient";
@@ -20,8 +21,12 @@ export class SearchMap extends Component {
 			lat: loc.lat,
 			lon: loc.lng
 		});
-		console.log('Set' + loc.lat + ' ' + loc.lng);
+		console.log('Set' + this.state.lat + ' ' + this.state.lon);
 	};
+
+	goToWeatherPage() {
+		route(`/place/${this.state.lat}/${this.state.lon}`);
+	}
 
 	render() {
 		return (

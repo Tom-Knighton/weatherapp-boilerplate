@@ -12,14 +12,13 @@ export default class TopCard extends Component {
 		*/
 
 		super(props);
-
-    APIClient.fetchWeatherForLocation().then((data) => {
+    APIClient.fetchWeatherForLocation(this.props.loc).then((data) => {
       this.setState({
         currentTemp: data.current.temp_c,
         currentIcon: `https://${data.current.condition.icon}`,
       });
 
-      APIClient.fetchForecastForLocation(10).then((data) => {
+      APIClient.fetchForecastForLocation(10, this.props.loc).then((data) => {
         this.setState({
           forecast: data.forecast.forecastday
         });
