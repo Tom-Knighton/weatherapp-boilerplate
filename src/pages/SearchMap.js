@@ -28,7 +28,7 @@ export class SearchMap extends Component {
 			<div class={style.app} >
                 <h3 className="bigTitle">Search Weather at..</h3>
                 <MapComponent class={style.mapContainer} loc={this.state.loc} enableMarker={true} onMarkerDrag={this.onMarkerDragged}/>
-                <Button>Search</Button>
+                <Button onClick={() => { this.goToWeatherPage() }}>Get Weather Here</Button>
 			</div>
 		);
 	}
