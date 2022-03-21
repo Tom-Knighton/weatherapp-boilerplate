@@ -15,6 +15,12 @@ export class MapComponent extends Component {
 
 	componentDidUpdate() {
 		if (this.state.hasLoaded || !this.props.loc) {
+			if (typeof this.state.map !== "undefined") {
+				if (this.props.setnew[0]) {
+					this.state.map.flyTo({center: this.props.setnew[1]});
+					this.state.marker.setLngLat(this.props.setnew[1]);
+				}
+			}
 			return;
 		}
 
@@ -32,13 +38,15 @@ export class MapComponent extends Component {
 			})
 				.setLngLat([lon, lat])
 				.addTo(map);
+			this.setState({
+				marker: marker
+			});
 
 			if (this.props.onMarkerDrag) {
 				this.setState({
 					perf: this.props.onMarkerDrag,
 				});
 
-				console.log(this.props.onMarkerDrag);
 				marker.on("dragend", () => {
 					this.props.onMarkerDrag(marker.getLngLat());
 				});
@@ -58,6 +66,7 @@ export class MapComponent extends Component {
 			hasLoaded: true,
 			chosenLat: this.props.loc.lat,
 			chosenLon: this.props.loc.lon,
+			map: map
 		});
 	}
 
