@@ -66,6 +66,7 @@ export class SearchCondition extends Component {
     searchFunc(){
       let chosenWeather = this.state.weather
       this.state.searchList = []
+      this.state.successfulSearch = true
       console.log("LISTB",this.state.searchList)
       function matchWeather(weather,match){
         //Takes the chosenWeather from the user, and figures out which conditions need to be searched for.
@@ -107,7 +108,8 @@ export class SearchCondition extends Component {
           //If filtering by Weather
           for (let hour = 0; hour <= 23; hour++) {
               if (matchWeather(chosenWeather,forecast[index].hour[hour].condition.text)){
-                let htmlCrate = ''+ forecast[index].hour[hour]
+                let htmlCrate = forecast[index].hour[hour]
+
                 //htmlCrate is a single hour, extract all data needed, time, condition, icon, and wrap in appropriate weather object.
                 toListHour = toListHour.concat(htmlCrate)
               }
@@ -125,14 +127,14 @@ export class SearchCondition extends Component {
     }
     console.log(toListHour)
     if (toListHour.length == 0){
-      this.state.searchList =  ["Why wont this work"];
+      this.state.successfulSearch = false
+      this.state.searchList =  ["No searchresults","--:--"];
       console.log("NON",this.state.searchList )
       this.forceUpdate()
 
     }
     else{
       this.state.searchList = toListHour
-      console.log("Fill",this.state.searchList )
       this.forceUpdate()
     }
 
@@ -172,8 +174,13 @@ export class SearchCondition extends Component {
                 </div>
 
                 <button class={style.button && style.button1} onClick={() => {this.searchFunc()}}>Search</button>
+                <ul id = "searchList"> {
+                  this.state.successfulSearch ?
+                  this.state.searchList.map((hour) => (<li>
+                  <Card>{hour.condition.text}  { hour.time.split(" ")[1]} </Card>
 
-                <ul id = "searchList">{this.state.searchList.map((hour) => (<li>{hour}</li>))}</ul>
+                  </li>))
+                  : <Card>'No search results --:--' </Card>} </ul>
             </div>
         );
     }
