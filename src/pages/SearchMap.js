@@ -11,7 +11,7 @@ export class SearchMap extends Component {
 
 		this.setState({
 			query: "",
-			test: false
+			moveMap: false
 		});
 
 		APIClient.getLocation().then((data) => {
@@ -38,7 +38,7 @@ export class SearchMap extends Component {
 					loc: {lat, lon, name},
 					lat: lat,
 					lon: lon,
-					test: true
+					moveMap: true
 				});
 				this.setQuery("");
 				console.log(this.state.loc);
@@ -46,7 +46,7 @@ export class SearchMap extends Component {
 		}
 		else {
 			this.setState({
-				test: false
+				moveMap: false
 			});
 		}
 	};
@@ -55,7 +55,8 @@ export class SearchMap extends Component {
 	onMarkerDragged = (loc) => {
 		this.setState({
 			lat: loc.lat,
-			lon: loc.lng
+			lon: loc.lng,
+			moveMap: false
 		});
 		console.log('Set' + this.state.lat + ' ' + this.state.lon);
 		console.log(this.state.loc);
@@ -70,7 +71,7 @@ export class SearchMap extends Component {
 			<div class={style.app} >
                 <h3 className="bigTitle">Search Weather at..</h3>
 				<input type="text" placeholder="Search..." onChange={e => this.setQuery(e.target.value)} value={this.state.query} onKeyPress={this.search}/>
-                <MapComponent class={style.mapContainer} loc={this.state.loc} enableMarker={true} onMarkerDrag={this.onMarkerDragged} setnew={[this.state.test,this.state.loc]}/>
+                <MapComponent class={style.mapContainer} loc={this.state.loc} enableMarker={true} onMarkerDrag={this.onMarkerDragged} setnew={[this.state.moveMap,this.state.loc]}/>
                 <Button onClick={() => { this.goToWeatherPage(); }}>Get Weather Here</Button>
 			</div>
 		);
