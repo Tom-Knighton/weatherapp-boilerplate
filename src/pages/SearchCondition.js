@@ -14,6 +14,9 @@ export class SearchCondition extends Component {
         this.state = {
             day: new Date()
             };
+        this.state = {
+          searchList: []
+        };
 
         this.onChangeValue = this.onChangeValue.bind(this);
 
@@ -51,7 +54,7 @@ export class SearchCondition extends Component {
         let stateDate = new Date(this.state.day)
 
         if(stateDate.getTime() > maxDate.getTime() || stateDate.getTime() < current.getTime()){
-            alert('Invalid Date! :(');
+            alert('Invalid Date! Search is limited to 3 days because of the API license.');
         }
 
     }
@@ -62,7 +65,8 @@ export class SearchCondition extends Component {
 
     searchFunc(){
       let chosenWeather = this.state.weather
-
+      this.state.searchList = []
+      console.log("LISTB",this.state.searchList)
       function matchWeather(weather,match){
         //Takes the chosenWeather from the user, and figures out which conditions need to be searched for.
         //To change, add a new key called the weather condtion to look for, and the value as a list of the substituted weather conditions.
@@ -90,10 +94,10 @@ export class SearchCondition extends Component {
       //This section should be in an if, it should only trigger if a day was not chosen, otherwise, forecast becomes
       // forecastday of that date.
       let forecast = this.state.forecast.forecastday;
-      console.log(forecast)
+      console.log(forecast,chosenDay)
       let toListHour = []
       for (let index = 0; index < forecast.length;index ++){
-        if (!(chosenDay instanceof Object)){
+        if (!(chosenDay == null || chosenDay == '')){
           if (chosenDay != forecast[index].date){
             continue
           }
@@ -103,7 +107,7 @@ export class SearchCondition extends Component {
           //If filtering by Weather
           for (let hour = 0; hour <= 23; hour++) {
               if (matchWeather(chosenWeather,forecast[index].hour[hour].condition.text)){
-                let htmlCrate = '<Card>'+ forecast[index].hour[hour] + '</Card>'
+                let htmlCrate = ''+ forecast[index].hour[hour]
                 //htmlCrate is a single hour, extract all data needed, time, condition, icon, and wrap in appropriate weather object.
                 toListHour = toListHour.concat(htmlCrate)
               }
@@ -113,21 +117,24 @@ export class SearchCondition extends Component {
 
       } else {
         //Not filtering by hours weather, append All hours of that day
-        let htmlCrate =' <Card>'+ forecast[index].hour +' </Card>'
+        let htmlCrate = ''+ forecast[index].hour
         //htmlCrate needs to be unwraped into all hours in this branch.
         //then extract all data needed, time, condition, icon, and wrap in appropriate weather object.
         toListHour = toListHour.concat(htmlCrate)
       }
     }
+    console.log(toListHour)
     if (toListHour.length == 0){
-
-      document.getElementById('searchList').innerHTML = "<p>Why wont this work</p>";
-      console.log("NON",document.getElementById('searchList').innerHTML)
+      this.state.searchList =  ["Why wont this work"];
+      console.log("NON",this.state.searchList )
+      this.forceUpdate()
 
     }
-
-    document.getElementById('searchList').innerHTML = toListHour;
-
+    else{
+      this.state.searchList = toListHour
+      console.log("Fill",this.state.searchList )
+      this.forceUpdate()
+    }
 
   }
 
@@ -166,7 +173,7 @@ export class SearchCondition extends Component {
 
                 <button class={style.button && style.button1} onClick={() => {this.searchFunc()}}>Search</button>
 
-                <div id = "searchList" ></div>
+                <ul id = "searchList">{this.state.searchList.map((hour) => (<li>{hour}</li>))}</ul>
             </div>
         );
     }
