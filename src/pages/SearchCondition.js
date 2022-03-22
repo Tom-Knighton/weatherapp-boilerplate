@@ -170,10 +170,14 @@ export class SearchCondition extends Component {
                 <input type="date" id="start" name="selected-day"
 
                         min="2022-01-01" max="2022-12-31"></input>
-                </div>
-                </div>
+                
 
+                </div>
+                <p></p>
                 <button class={style.button && style.button1} onClick={() => {this.searchFunc()}}>Search</button>
+                
+                </div>
+                
                 <ul id = "searchList"> {
                   this.state.successfulSearch ?
                   this.state.searchList.map((hour) => (<li>
