@@ -17,7 +17,7 @@ export default class HomePage extends Component {
 		super(props);
 
 		this.setState({
-			locationName: "Loading... ",
+			locationName: "Loading... "
 		});
 
 		APIClient.getLocation(
@@ -26,8 +26,13 @@ export default class HomePage extends Component {
 		).then((data) => {
 			this.setState({
 				locationName: data.name,
-				locationTime: data.time,
+				locationTime: data.time
 			});
+		});
+
+		APIClient.fetchWeatherForLocation(this.getLocName()).then((data) => {
+			data = data.current.condition.text;
+			this.props.getWeather(data);
 		});
 	}
 
@@ -39,7 +44,7 @@ export default class HomePage extends Component {
 		return new Date(this.state.locationTime).toLocaleTimeString([], {
 			hour: "numeric",
 			minute: "numeric",
-			hour12: true,
+			hour12: true
 		});
 	}
 
@@ -54,7 +59,7 @@ export default class HomePage extends Component {
 	render() {
 		return (
 			<div className={[style.app, this.props.lat ? "bg" : ""].join(' ')}>
-				{this.props.lat && <Button onClick={() => { history.go(-1) }}>Go Back</Button> }
+				{this.props.lat && <Button onClick={() => { history.go(-1);}}>Go Back</Button> }
 				<h1>
 					{this.state.locationName} {this.getTime()}
 				</h1>

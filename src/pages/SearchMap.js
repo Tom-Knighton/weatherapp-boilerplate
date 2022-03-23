@@ -24,12 +24,14 @@ export class SearchMap extends Component {
 		});
 	}
 
+	// setter for query state
 	setQuery(value) {
 		this.setState({
 			query:value
 		});
 	}
 
+	// Find the location of the name and then tells the map it can move and resets query (and searchbar)
 	search = evt => {
 		if (evt.key === "Enter") {
 			APIClient.searchForLocation(this.state.query).then((data) => {
