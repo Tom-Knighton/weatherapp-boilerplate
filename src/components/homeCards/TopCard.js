@@ -92,10 +92,12 @@ export default class TopCard extends Component {
 	render(){
 		return (
 			<Card>
-				<div>
-					<img src={this.state.currentIcon} alt="Image borked" class={style.leftIcon}/>
+				<div Class={style.topCard}>
+					<img src={this.state.currentIcon} alt="Image borked" Class={style.leftIcon}/>
 					<h1>{this.state.currentTemp}°C</h1>
-					{this.state.forecast && this.rainToday()}
+					<div>
+						{this.state.forecast && this.rainToday()}
+					</div>
 				</div>
 			</Card>);
 
