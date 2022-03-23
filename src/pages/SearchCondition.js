@@ -128,8 +128,6 @@ export class SearchCondition extends Component {
     console.log(toListHour)
     if (toListHour.length == 0){
       this.state.successfulSearch = false
-      this.state.searchList =  ["No searchresults","--:--"];
-      console.log("NON",this.state.searchList )
       this.forceUpdate()
 
     }
@@ -170,21 +168,21 @@ export class SearchCondition extends Component {
                 <input type="date" id="start" name="selected-day"
 
                         min="2022-01-01" max="2022-12-31"></input>
-                
+
 
                 </div>
                 <p></p>
                 <button class={style.button && style.button1} onClick={() => {this.searchFunc()}}>Search</button>
-                
-                </div>
-                
-                <ul id = "searchList"> {
-                  this.state.successfulSearch ?
-                  this.state.searchList.map((hour) => (<li>
-                  <Card>{hour.condition.text}  { hour.time.split(" ")[1]} </Card>
 
-                  </li>))
-                  : <Card>'No search results --:--' </Card>} </ul>
+                </div>
+
+                <div id = "searchList"> {
+                  this.state.successfulSearch ?
+                  this.state.searchList.map((hour) => (
+                  <Card> {hour.condition.text}  { hour.time.split(" ")[1]} </Card>
+
+                  ))
+                  : <Card>No search results --:-- </Card>} </div>
             </div>
         );
     }
