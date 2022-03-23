@@ -7,6 +7,9 @@ export class SearchCondition extends Component {
 
     constructor(props) {
         super(props);
+        // Page needs to store, the weather the person wants to search for
+        // The day the person wants to search for
+        // A list of the searchResults.
 
         this.state = {
             weather: "default"
@@ -22,37 +25,29 @@ export class SearchCondition extends Component {
 
         this.onChangeValue2 = this.onChangeValue2.bind(this);
 
-
+        //An call to the client to grab the weather forecast for 3 days ahea, limited because of the license used.
         APIClient.fetchForecastForLocation(7).then((data) => {
+          console.log(data)
           this.setState({
             forecast: data.forecast,
 
           });
-          console.log(this.state.forecast);
         });
 
-
     }
-
+    //The events that grab the users choice of weather and date. Date is checked to see if the day can be searched for in the forecast from the APIClient
     onChangeValue(event) {
-        //console.log(event.target.value);
+        //
         this.setState({weather: event.target.value});
     }
 
     onChangeValue2(event) {
-        //console.log(event.target.value);
-
+        //
         this.setState({day: event.target.value});
 
         let current = new Date();
         let maxDate = new Date();
-        maxDate.setDate(current.getDate() + 2)
-
-        //let currentDateString = `"${current.getFullYear()}-${current.getMonth()+1}-${current.getDate()}"`;
-        //let maxDateString = `"${current.getFullYear()}-${current.getMonth()+1}-${current.getDate() + 7}"`;
-
-
-
+        maxDate.setDate(current.getDate() + 3)
         let stateDate = new Date(this.state.day)
 
         if(stateDate.getTime() > maxDate.getTime() || stateDate.getTime() < current.getTime()){
@@ -61,19 +56,14 @@ export class SearchCondition extends Component {
 
     }
 
-
-
-
-
     searchFunc(){
+      // searchFunction, changes searchList to contain the searchResults, which is called in the render function to display the results.
       let chosenWeather = this.state.weather
       this.state.searchList = []
       this.state.successfulSearch = true
-      console.log("LISTB",this.state.searchList)
       function matchWeather(weather,match){
         //Takes the chosenWeather from the user, and figures out which conditions need to be searched for.
         //To change, add a new key called the weather condtion to look for, and the value as a list of the substituted weather conditions.
-
         let weatherDic = {
         "Sunny": ["Sunny"],
         "Thunderstorm":  ["Thundery outbreaks possible","Patchy light snow with thunder","Moderate or heavy snow with thunder","Patchy light rain with thunder","Moderate or heavy rain with thunder"],
@@ -92,13 +82,20 @@ export class SearchCondition extends Component {
       }
 
       let chosenDay = this.state.day
-      //Grab 7 day forecast, or a chosn day is there is one, filter by chosenWeather.
-
-      //This section should be in an if, it should only trigger if a day was not chosen, otherwise, forecast becomes
-      // forecastday of that date.
       let forecast = this.state.forecast.forecastday;
-      console.log(forecast,chosenDay)
       let toListHour = []
+
+      // Search Logic is as follows
+      /*
+        Grab the entire forecast, filter by weather and date
+        If a date was chosen, Take that days forecast only.
+        If not, continue with every day.
+
+          If there is a weather chosen, take hours where that weather is predicted
+          If not; take every hour of that chosen day
+
+      */
+
       for (let index = 0; index < forecast.length;index ++){
         if (!(chosenDay == null || chosenDay == '')){
           if (chosenDay != forecast[index].date){
@@ -111,27 +108,21 @@ export class SearchCondition extends Component {
           for (let hour = 0; hour <= 23; hour++) {
               if (matchWeather(chosenWeather,forecast[index].hour[hour].condition.text)){
                 let htmlCrate = forecast[index].hour[hour]
-
                 //htmlCrate is a single hour, extract all data needed, time, condition, icon, and wrap in appropriate weather object.
                 toListHour = toListHour.concat(htmlCrate)
               }
           }
-
-
-
       } else {
         //Not filtering by hours weather, append All hours of that day
-        let htmlCrate = ''+ forecast[index].hour
-        //htmlCrate needs to be unwraped into all hours in this branch.
-        //then extract all data needed, time, condition, icon, and wrap in appropriate weather object.
+        let htmlCrate = forecast[index].hour
         toListHour = toListHour.concat(htmlCrate)
       }
     }
-    console.log(toListHour)
+
+    //Checks if there are no search results.
     if (toListHour.length == 0){
       this.state.successfulSearch = false
       this.forceUpdate()
-
     }
     else{
       this.state.searchList = toListHour
@@ -181,7 +172,7 @@ export class SearchCondition extends Component {
                 <div id = "searchList"> {
                   this.state.successfulSearch ?
                   this.state.searchList.map((hour) => (
-                  <Card> {hour.condition.text}  { hour.time.split(" ")[1]} </Card>
+                  <Card> { hour.time.split("-")[2].split(" ")[0]}/{parseInt(hour.time.split("-")[1])} {hour.condition.text}  { hour.time.split(" ")[1]} </Card>
 
                   ))
                   : <Card>No search results --:-- </Card>} </div>
