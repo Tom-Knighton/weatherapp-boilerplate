@@ -27,6 +27,7 @@ export class SearchCondition extends Component {
 
         //An call to the client to grab the weather forecast for 3 days ahea, limited because of the license used.
         APIClient.fetchForecastForLocation(7).then((data) => {
+          console.log(data)
           this.setState({
             forecast: data.forecast,
 
@@ -64,12 +65,13 @@ export class SearchCondition extends Component {
         //Takes the chosenWeather from the user, and figures out which conditions need to be searched for.
         //To change, add a new key called the weather condtion to look for, and the value as a list of the substituted weather conditions.
         let weatherDic = {
-        "Sunny": ["Sunny"],
-        "Thunderstorm":  ["Thundery outbreaks possible","Patchy light snow with thunder","Moderate or heavy snow with thunder","Patchy light rain with thunder","Moderate or heavy rain with thunder"],
-        "Clear Sky": ["Clear"],
+        "Clear": ["Sunny", "Clear"],
+        "Cloudy": ["Partly cloudy", "Cloudy", "Overcast"],
         "Snow":  ["Blowing snow","Patchy light snow","Light snow","Patchy moderate snow","Moderate snow","Patchy heavy snow","Heavy snow","Light snow showers",
-      "Moderate or heavy snow showers","Patchy light snow with thunder","Moderate or heavy snow with thunder"],
-        "Light Showers":  ["Patchy rain possible","Patchy light rain with thunder","Light rain shower"]
+      "Moderate or heavy snow showers","Patchy light snow with thunder","Moderate or heavy snow with thunder", "Blizzard"],
+        "Rain":["Patchy rain possible","Patchy light rain with thunder","Light rain shower"],
+        "Lightning" :  ["Thundery outbreaks possible","Patchy light snow with thunder","Moderate or heavy snow with thunder","Patchy light rain with thunder","Moderate or heavy rain with thunder"],
+        "Foggy" : ["Fog", "Mist"]
         }
 
         for (let i = 0; i < weatherDic[weather].length; i++){
@@ -141,15 +143,17 @@ export class SearchCondition extends Component {
                 <h4>Weather</h4>
 
                 <div onChange={this.onChangeValue}>
-                <input type="radio" value="Sunny" name="weather" /> Sunny
+                <input type="radio" value="Clear" name="weather" /> Clear
                 <p></p>
-                <input type="radio" value="Thunderstorm" name="weather" /> Thunderstorm
-                <p></p>
-                <input type="radio" value="Clear Sky" name="weather" /> Clear Night Sky
+                <input type="radio" value="Cloudy" name="weather" /> Cloudy
                 <p></p>
                 <input type="radio" value="Snow" name="weather" /> Snow
                 <p></p>
-                <input type="radio" value="Light Showers" name="weather" /> Light Showers
+                <input type="radio" value="Rain" name="weather" /> Rain
+                <p></p>
+                <input type="radio" value="Lightning" name="weather" /> Lightning
+                <p></p>
+                <input type="radio" value="Foggy" name="weather" /> Foggy
                 <p></p>
 
                 </div>
