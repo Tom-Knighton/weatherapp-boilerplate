@@ -9,11 +9,14 @@ export class SearchMap extends Component {
 	constructor(props) {
 		super(props);
 
+		// Sets the initial states
 		this.setState({
 			query: "",
 			moveMap: false
 		});
 
+
+		// Grabs the current location and sets the 'loc' state to the data received
 		APIClient.getLocation().then((data) => {
 			this.setState({
 				loc: data
@@ -50,6 +53,7 @@ export class SearchMap extends Component {
 	};
 
 
+	// When the user finishes moving the marker, set our 'lat' and 'lon' states to the new location
 	onMarkerDragged = (loc) => {
 		this.setState({
 			lat: loc.lat,
@@ -58,6 +62,7 @@ export class SearchMap extends Component {
 		});
 	};
 
+	// Call the route method to replace the current page with the place/ route (From app.js)
 	goToWeatherPage() {
 		route(`/place/${this.state.lat}/${this.state.lon}`);
 	}

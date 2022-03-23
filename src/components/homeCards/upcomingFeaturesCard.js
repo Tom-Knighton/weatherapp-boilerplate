@@ -7,6 +7,7 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 	constructor(props) {
 		super(props);
 
+		// Grabs the forecast for 2 days for the current location and then sets the relevant data to the state
 		APIClient.fetchForecastForLocation(2, props.loc).then((data) => {
 			this.setState({
 				forecast: data.forecast,
@@ -84,11 +85,13 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 		return result.slice(0, 4);
 	}
 
+	// Minutes between two date values
 	getMinsBetween(date1, date2) {
 		const diff = Math.abs(date1 - date2);
 		return Math.floor(diff / 1000 / 60);
 	}
 
+	// Returns a string to append to the feature, depending on the type of feature and how close the date is
 	getDateString(feature) {
 		const dateOptions = { hour: "2-digit", minute: "2-digit" };
 
