@@ -44,19 +44,21 @@ export class SearchCondition extends Component {
         //
         this.setState({day: event.target.value});
 
-        let current = new Date();
-        let maxDate = new Date();
-        maxDate.setDate(current.getDate() + 3)
-        let stateDate = new Date(this.state.day)
-
-        if(stateDate.getTime() > maxDate.getTime() || stateDate.getTime() < current.getTime()){
-            alert('Invalid Date! Search is limited to 3 days because of the API license.');
-        }
 
     }
 
     searchFunc(){
       // searchFunction, changes searchList to contain the searchResults, which is called in the render function to display the results.
+      let current = new Date();
+      let maxDate = new Date();
+      maxDate.setDate(current.getDate() + 3)
+      let stateDate = new Date(this.state.day)
+
+      if(stateDate.getTime() > maxDate.getTime() || stateDate.getTime() < current.getTime()){
+          alert('Invalid Date! Search is limited to 3 days because of the API license.');
+          return false
+        }
+
       let chosenWeather = this.state.weather
       this.state.searchList = []
       this.state.successfulSearch = true
