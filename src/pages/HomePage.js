@@ -23,7 +23,6 @@ export default class HomePage extends Component {
 			this.props.lat ? this.props.lat : null,
 			this.props.lon ? this.props.lon : null
 		).then((data) => {
-			console.log("Called location got " + data.name);
 			this.setState({
 				locationName: data.name,
 				locationTime: data.time,

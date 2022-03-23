@@ -68,7 +68,6 @@ export default {
 	},
 
 	getLocation(lat = null, lon = null) {
-		console.log('running for ' + lat + ' ' + lon);
 		return new Promise((resolve, reject) => {
 
 			if (lat && lon) {

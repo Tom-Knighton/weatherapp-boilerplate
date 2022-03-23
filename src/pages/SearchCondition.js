@@ -27,7 +27,6 @@ export class SearchCondition extends Component {
 
         //An call to the client to grab the weather forecast for 3 days ahea, limited because of the license used.
         APIClient.fetchForecastForLocation(7).then((data) => {
-          console.log(data)
           this.setState({
             forecast: data.forecast,
 

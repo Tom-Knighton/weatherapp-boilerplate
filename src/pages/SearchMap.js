@@ -30,7 +30,6 @@ export class SearchMap extends Component {
 	search = evt => {
 		if (evt.key === "Enter") {
 			APIClient.searchForLocation(this.state.query).then((data) => {
-				console.log(data[0]);
 				let lat = data[0].lat;
 				let lon = data[0].lon;
 				let name = data[0].name;
@@ -41,7 +40,6 @@ export class SearchMap extends Component {
 					moveMap: true
 				});
 				this.setQuery("");
-				console.log(this.state.loc);
 			});
 		}
 		else {
@@ -58,8 +56,6 @@ export class SearchMap extends Component {
 			lon: loc.lng,
 			moveMap: false
 		});
-		console.log('Set' + this.state.lat + ' ' + this.state.lon);
-		console.log(this.state.loc);
 	};
 
 	goToWeatherPage() {
