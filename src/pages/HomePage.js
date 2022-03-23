@@ -8,6 +8,8 @@ import {
 } from "../components/homeCards";
 import APIClient from "../lib/APIClient";
 import style from "./style.less";
+import Button from "../components/Button";
+import { route } from "preact-router";
 
 export default class HomePage extends Component {
 	constructor(props) {
@@ -52,6 +54,7 @@ export default class HomePage extends Component {
 	render() {
 		return (
 			<div class={style.app}>
+				{this.props.lat && <Button onClick={() => { history.go(-1) }}>Go Back</Button> }
 				<h1>
 					{this.state.locationName} {this.getTime()}
 				</h1>

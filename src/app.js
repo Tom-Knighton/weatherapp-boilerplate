@@ -25,7 +25,7 @@ export default class App extends Component {
 			<div id="app">
 				<div class="container">
 					<Router>
-						<SwipeableViews path="/" index={2} enableMouseEvents={true}>
+						<SwipeableViews path="/" index={1} enableMouseEvents={true}>
 							<SearchCondition />
 							<HomePage />
 							<SearchMap/>
