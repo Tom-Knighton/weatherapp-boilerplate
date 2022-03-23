@@ -10,6 +10,7 @@ import APIClient from "../lib/APIClient";
 import style from "./style.less";
 import Button from "../components/Button";
 import { route } from "preact-router";
+import TipsCard from "../components/homeCards/tipsCard";
 
 export default class HomePage extends Component {
 	constructor(props) {
@@ -62,7 +63,7 @@ export default class HomePage extends Component {
 				<UpcomingWeatherFeaturesCard loc={this.getLocName()}/>
 				<HourlyForecast loc={this.getLocName()}/>
 				<DetailedCard loc={this.getLocName()}/>
-				{ !this.props.lat && <Card>Tips go here</Card> }
+				{ !this.props.lat && <TipsCard/> }
 			</div>
 		);
 	}

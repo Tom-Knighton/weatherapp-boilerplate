@@ -5,7 +5,6 @@ import SwipeableViews from "react-swipeable-views/lib/SwipeableViews";
 import HomePage from "./pages/HomePage";
 import { SearchCondition } from "./pages/SearchCondition";
 import { SearchMap } from "./pages/SearchMap";
-import { TestPage, TestSubPage } from "./pages/TestPage";
 
 // import required Components from 'components/'
 
@@ -30,7 +29,6 @@ export default class App extends Component {
 							<HomePage />
 							<SearchMap/>
 						</SwipeableViews>
-						<TestSubPage path="/subpage/:pageNum"/>
 						<HomePage path="/place/:lat/:lon"/>
 					</Router>
 				</div>
