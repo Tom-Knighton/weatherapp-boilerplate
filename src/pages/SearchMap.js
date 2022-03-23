@@ -66,7 +66,7 @@ export class SearchMap extends Component {
 		return (
 			<div class={style.app} >
                 <h3 className="bigTitle">Search Weather at..</h3>
-				<input type="text" placeholder="Search..." onChange={e => this.setQuery(e.target.value)} value={this.state.query} onKeyPress={this.search}/>
+				<input type="text" placeholder="Search..." className={style.searchField} onChange={e => this.setQuery(e.target.value)} value={this.state.query} onKeyPress={this.search}/>
                 <MapComponent class={style.mapContainer} loc={this.state.loc} enableMarker={true} onMarkerDrag={this.onMarkerDragged} setnew={[this.state.moveMap,this.state.loc]}/>
                 <Button onClick={() => { this.goToWeatherPage(); }}>Get Weather Here</Button>
 			</div>

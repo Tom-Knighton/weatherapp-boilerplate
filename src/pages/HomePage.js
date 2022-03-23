@@ -53,7 +53,7 @@ export default class HomePage extends Component {
 
 	render() {
 		return (
-			<div class={style.app}>
+			<div className={[style.app, this.props.lat ? "bg" : ""].join(' ')}>
 				{this.props.lat && <Button onClick={() => { history.go(-1) }}>Go Back</Button> }
 				<h1>
 					{this.state.locationName} {this.getTime()}
