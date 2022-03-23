@@ -137,34 +137,38 @@ export class SearchCondition extends Component {
     render() {
         return (
             <div class={style.app}>
+
+                <div class={style.inputFields} id = 'SearchConditionSearch'>
                 <header>
                 <h3>Search by Weather and Day</h3>
                 </header>
-                <div class={style.inputFields}>
+                <hr></hr>
                 <h4>Weather</h4>
 
                 <div onChange={this.onChangeValue}>
-                <input type="radio" value="Clear" name="weather" /> Clear
-                <p></p>
-                <input type="radio" value="Cloudy" name="weather" /> Cloudy
-                <p></p>
-                <input type="radio" value="Snow" name="weather" /> Snow
-                <p></p>
-                <input type="radio" value="Rain" name="weather" /> Rain
-                <p></p>
-                <input type="radio" value="Lightning" name="weather" /> Lightning
-                <p></p>
-                <input type="radio" value="Foggy" name="weather" /> Foggy
-                <p></p>
+                  <div class = {style.parentRadio}>
+                    <div class = {style.childRadio}>
+                      <input type="radio" value="Clear" name="weather" /> Clear
+                      <br></br>
+                      <input type="radio" value="Cloudy" name="weather" /> Cloudy
+                      <br></br>
+                      <input type="radio" value="Snow" name="weather" /> Snow
+                    </div>
+                    <div class = {style.childRadio}>
+                      <input type="radio" value="Rain" name="weather" /> Rain
+                      <br></br>
+                      <input type="radio" value="Lightning" name="weather" /> Lightning
+                      <br></br>
+                      <input type="radio" value="Foggy" name="weather" /> Foggy
+
+                    </div>
+                  </div>
 
                 </div>
 
-
                 <h4>Day</h4>
                 <div onChange={this.onChangeValue2}>
-                <input type="date" id="start" name="selected-day"
-
-                        min="2022-01-01" max="2022-12-31"></input>
+                <input type="date" id="start" name="selected-day" min="2022-01-01" max="2022-12-31"></input>
 
 
                 </div>
