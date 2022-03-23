@@ -28,7 +28,6 @@ export default class HourlyForecast extends Component {
 		const upcomingHours = this.state.forecast
 			.flatMap((fd) => fd.hour)
 			.filter((h) => new Date(h.time) > new Date());
-		console.log(upcomingHours);
 		for (let i = 0; i <= maxToDisplay; i++) {
 			divs.push(
 				<div className={style.row}>
