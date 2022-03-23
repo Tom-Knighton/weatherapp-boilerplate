@@ -8,7 +8,7 @@ import {
 } from "../components/homeCards";
 import APIClient from "../lib/APIClient";
 import style from "./style.less";
-import Button from "../components/Button";
+import Button from "../components/button";
 import { route } from "preact-router";
 import TipsCard from "../components/homeCards/tipsCard";
 
