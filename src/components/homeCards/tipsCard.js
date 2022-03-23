@@ -7,6 +7,8 @@ export default class TipsCard extends Component {
     
     constructor(props) {
         super(props);
+
+        // Sets a random tip from the array above
         this.setState({
             tip: this.tips[Math.floor(Math.random()*this.tips.length)]
         });
