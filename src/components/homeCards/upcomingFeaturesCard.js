@@ -7,7 +7,7 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 	constructor(props) {
 		super(props);
 
-		APIClient.fetchForecastForLocation(2).then((data) => {
+		APIClient.fetchForecastForLocation(2, props.loc).then((data) => {
 			this.setState({
 				forecast: data.forecast,
 				currentWeather: data.current,

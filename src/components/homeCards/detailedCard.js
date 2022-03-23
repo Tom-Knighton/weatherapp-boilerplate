@@ -7,7 +7,7 @@ export default class detailedCard extends Component {
 	constructor(props) {
 		super(props);
 
-		APIClient.fetchWeatherForLocation().then((data) => {
+		APIClient.fetchWeatherForLocation(this.props.loc).then((data) => {
 			this.setState({
 				currentCloud: data.current.cloud,
 				currentWindSpeed: data.current.gust_mph,

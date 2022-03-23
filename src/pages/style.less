@@ -1,10 +1,9 @@
-@import '~style/helpers';
-
+@import "~style/helpers";
 
 .app {
 	display: flex;
 	flex-direction: column;
-	background-image: url('../assets/backgrounds/clear-iphone.jpg');
+	background-image: url("../assets/backgrounds/clear-iphone.jpg");
 	color: #fff;
 	text-align: center;
 	margin: 0 auto;
@@ -13,16 +12,16 @@
 	min-height: 736px;
 	gap: 15px;
   	overflow: auto;
-	  font-family:Verdana, Geneva, Tahoma, sans-serif
+  	font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
-h3{
+h3 {
 	color: rgb(248, 245, 245);
 
 }
 
 .button {
-	background-color: #008CBA; /* Green */
+	background-color: #008cba; /* Green */
 	border: none;
 	color: white;
 	padding: 16px 32px;
@@ -34,22 +33,17 @@ h3{
 	transition-duration: 0.4s;
 	cursor: pointer;
   }
-
   .button1 {
 	background-color: white;
 	color: black;
 	border: 2px solid #008CBA;
 	width: 200px;
-
   }
-
   .button1:hover {
 	background-color: #008CBA;
 	color: white;
   }
-
-
-  .inputFields {
+.inputFields {
 	text-align: center;
 	background-color: #3d3739d3;
 	box-shadow: 0 0 3px black;
@@ -60,9 +54,16 @@ h3{
 	color: white;
 
   }
-
   header{
-	margin: 0; padding: 1em 2em 1em; color: #efefef;
+	margin: 0;
+	padding: 1em 2em 1em;
+	color: #efefef;
 	overflow:hidden;
 	position: relative;
   }
+.mapContainer {
+	width: 200px;
+	height: 200px;
+	display: flex;
+	flex: 1;
+}
