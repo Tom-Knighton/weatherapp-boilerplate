@@ -169,7 +169,7 @@ export class SearchCondition extends Component {
 					<p></p>
 					<Button onClick={() => {this.searchFunc(); }}>Search</Button>
 				</div>
-				<div id = "searchList"> {
+				<div className={style.searchList}> {
 					this.state.successfulSearch ?
 						this.state.searchList.map((hour) => (
 							<Card> { hour.time.split("-")[2].split(" ")[0]}/{parseInt(hour.time.split("-")[1])} {hour.condition.text}  { hour.time.split(" ")[1]} </Card>
