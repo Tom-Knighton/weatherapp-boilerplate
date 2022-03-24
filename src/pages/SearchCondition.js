@@ -50,6 +50,7 @@ export class SearchCondition extends Component {
 	searchFunc(){
 		// searchFunction, changes searchList to contain the searchResults, which is called in the render function to display the results.
 		let current = new Date();
+		current.setHours(0, 0, 0, 0);
 		let maxDate = new Date();
 		maxDate.setDate(current.getDate() + 3);
 		let stateDate = new Date(this.state.day);
