@@ -26,6 +26,7 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 
 		let features = [];
 
+		// For each astronomy data object we receive from the api, add in the sunrise, sunset, moonrise, moonset and golden hour information
 		this.state.astro.forEach((day) => {
 			const isToday = day === this.state.astro[0];
 			const date = isToday ? this.state.date : this.state.dateTomorrow;
@@ -49,15 +50,11 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 			});
 
 			// Calculating golden hours data by subtracting one hour from sunrise/sunset, and adding to features
-			let riseGoldenHourDate = new Date(
-				`${this.state.date} ${day.sunrise}`
-			);
+			let riseGoldenHourDate = new Date(`${this.state.date} ${day.sunrise}`);
 			riseGoldenHourDate.setHours(riseGoldenHourDate.getHours() - 1);
 			features.push({ date: riseGoldenHourDate, name: "Golden Hour" });
 
-			let setGoldenHourDate = new Date(
-				`${this.state.date} ${day.sunset}`
-			);
+			let setGoldenHourDate = new Date(`${this.state.date} ${day.sunset}`);
 			setGoldenHourDate.setHours(setGoldenHourDate.getHours() - 1);
 			features.push({ date: setGoldenHourDate, name: "Golden Hour" });
 		});
