@@ -1,8 +1,9 @@
 import { h, render, Component } from "preact";
-import { route } from "preact-router";
 import Card from "../components/card";
 import style from "./style.less";
 import APIClient from "../lib/APIClient";
+import Button from "../components/button";
+
 export class SearchCondition extends Component {
 
 	constructor(props) {
@@ -166,7 +167,7 @@ export class SearchCondition extends Component {
 						<input type="date" id="start" name="selected-day" min="2022-01-01" max="2022-12-31"/>
 					</div>
 					<p></p>
-					<button class={style.button && style.button1} onClick={() => {this.searchFunc();}}>Search</button>
+					<Button onClick={() => {this.searchFunc(); }}>Search</Button>
 				</div>
 				<div id = "searchList"> {
 					this.state.successfulSearch ?
