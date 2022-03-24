@@ -52,7 +52,7 @@ export class SearchCondition extends Component {
 		let current = new Date();
 		current.setHours(0, 0, 0, 0);
 		let maxDate = new Date();
-		maxDate.setDate(current.getDate() + 3);
+		maxDate.setDate(current.getDate() + 2);
 		let stateDate = new Date(this.state.day);
 
 		if (stateDate.getTime() > maxDate.getTime() || stateDate.getTime() < current.getTime()){
