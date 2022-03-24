@@ -61,7 +61,7 @@ export default class HomePage extends Component {
 			<div className={[style.app, this.props.lat ? "bg" : ""].join(' ')}>
 				{this.props.lat && <Button onClick={() => { history.go(-1);}}>Go Back</Button> }
 				<h1>
-					{this.state.locationName}{"   "}{this.getTime()}
+					{this.state.locationName}&nbsp;{this.getTime()}
 				</h1>
 				<TopCard loc={this.getLocName()}/>
 				<UpcomingWeatherFeaturesCard loc={this.getLocName()}/>
