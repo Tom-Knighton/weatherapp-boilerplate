@@ -66,15 +66,19 @@ export class SearchCondition extends Component {
 		function matchWeather(weather,match){
 			//Takes the chosenWeather from the user, and figures out which conditions need to be searched for.
 			//To change, add a new key called the weather condtion to look for, and the value as a list of the substituted weather conditions.
+
 			let weatherDic = {
-				"Clear": ["Sunny", "Clear"],
-				"Cloudy": ["Partly cloudy", "Cloudy", "Overcast"],
-				"Snow":  ["Blowing snow","Patchy light snow","Light snow","Patchy moderate snow","Moderate snow","Patchy heavy snow","Heavy snow","Light snow showers",
-					"Moderate or heavy snow showers","Patchy light snow with thunder","Moderate or heavy snow with thunder", "Blizzard"],
-				"Rain":["Patchy rain possible","Patchy light rain with thunder","Light rain shower"],
-				"Lightning" :  ["Thundery outbreaks possible","Patchy light snow with thunder","Moderate or heavy snow with thunder","Patchy light rain with thunder","Moderate or heavy rain with thunder"],
-				"Foggy" : ["Fog", "Mist"]
-			};
+        "Clear": ["Sunny", "Clear"],
+        "Cloudy": ["Partly cloudy", "Cloudy", "Overcast"],
+        "Snow":  ["Blowing snow","Patchy light snow","Light snow",
+        "Patchy moderate snow","Moderate or heavy sleet showers","Moderate or heavy showers of ice pellets","Light showers of ice pellets","Light sleet showers","Ice pellets","Moderate snow","Patchy heavy snow","Heavy snow","Light snow showers",
+      "Moderate or heavy snow showers","Moderate or heavy sleet showers","Patchy light snow with thunder","Moderate or heavy snow with thunder","Light sleet","Moderate or heavy sleet", "Blizzard"],
+        "Rain":["Patchy rain possible","Torrential rain shower","Moderate or heavy rain shower","Heavy rain","Moderate rain at times","Moderate or heavy freezing rain","Light freezing rain","Patchy light rain with thunder","Patchy freezing drizzle possible","Patchy light drizzle","Light drizzle","Freezing drizzle","Heavy freezing drizzle","Light rain shower"],
+        "Lightning" :  ["Thundery outbreaks possible","Patchy light snow with thunder",
+        "Moderate or heavy snow with thunder","Patchy light rain with thunder","Moderate or heavy rain with thunder"],
+        "Foggy" : ["Fog", "Mist","Freezing fog"]
+        }
+
 
 			for (let i = 0; i < weatherDic[weather].length; i++){
 				if (match == weatherDic[weather][i]){
