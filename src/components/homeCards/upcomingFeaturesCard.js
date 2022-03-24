@@ -12,8 +12,9 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 			this.setState({
 				forecast: data.forecast,
 				currentWeather: data.current,
-				astro: data.forecast.forecastday[0].astro,
+				astro: data.forecast.forecastday.map((d) => d.astro),
 				date: data.forecast.forecastday[0].date,
+				dateTomorrow: data.forecast.forecastday[1].date,
 			});
 		});
 	}
@@ -25,28 +26,41 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 
 		let features = [];
 
-		// Adding basic sunset/sunrise data
-		features.push({
-			date: new Date(`${this.state.date} ${this.state.astro.sunrise}`),
-			name: "Sunrise",
-		});
-		features.push({
-			date: new Date(`${this.state.date} ${this.state.astro.sunset}`),
-			name: "Sunset",
-		});
+		this.state.astro.forEach((day) => {
+			const isToday = day === this.state.astro[0];
+			const date = isToday ? this.state.date : this.state.dateTomorrow;
 
-		// Calculating golden hours data by subtracting one hour from sunrise/sunset, and adding to features
-		let riseGoldenHourDate = new Date(
-			`${this.state.date} ${this.state.astro.sunrise}`
-		);
-		riseGoldenHourDate.setHours(riseGoldenHourDate.getHours() - 1);
-		features.push({ date: riseGoldenHourDate, name: "Golden Hour" });
+			features.push({
+				date: new Date(`${date} ${day.sunrise}`),
+				name: "Sunrise",
+			});
+			features.push({
+				date: new Date(`${date} ${day.sunset}`),
+				name: "Sunset",
+			});
 
-		let setGoldenHourDate = new Date(
-			`${this.state.date} ${this.state.astro.sunset}`
-		);
-		setGoldenHourDate.setHours(setGoldenHourDate.getHours() - 1);
-		features.push({ date: setGoldenHourDate, name: "Golden Hour" });
+			features.push({
+				date: new Date(`${date} ${day.moonrise}`),
+				name: "Moonrise",
+			});
+			features.push({
+				date: new Date(`${date} ${day.moonset}`),
+				name: "Moonset",
+			});
+
+			// Calculating golden hours data by subtracting one hour from sunrise/sunset, and adding to features
+			let riseGoldenHourDate = new Date(
+				`${this.state.date} ${day.sunrise}`
+			);
+			riseGoldenHourDate.setHours(riseGoldenHourDate.getHours() - 1);
+			features.push({ date: riseGoldenHourDate, name: "Golden Hour" });
+
+			let setGoldenHourDate = new Date(
+				`${this.state.date} ${day.sunset}`
+			);
+			setGoldenHourDate.setHours(setGoldenHourDate.getHours() - 1);
+			features.push({ date: setGoldenHourDate, name: "Golden Hour" });
+		});
 
 		// Adds all upcoming weather conditions that are not the same as current conditions
 		let hasSeenDifferentWeather = false;
@@ -60,7 +74,7 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 					!hasSeenDifferentWeather &&
 					forecast.condition.code === this.state.currentWeather.condition.code
 				) {
-                    hasSeenDifferentWeather = true;
+					hasSeenDifferentWeather = true;
 					return; // Ignore all forecast data that is the same as our current conditions, if we haven't seen any different yet
 				}
 
@@ -75,7 +89,11 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 		// I.e. if there are two 'features' next to eachother that are both 'sunny', we only take the first one and remove the second
 		let result = [];
 		for (let i = 0; i < features.length - 1; ++i) {
-			if (features[i].name === features[i + 1].name) {
+			if (i == 0) {
+				result.push(features[i]);
+				continue;
+			}
+			if (features[i].name === features[i - 1].name) {
 				continue;
 			}
 			result.push(features[i]);
