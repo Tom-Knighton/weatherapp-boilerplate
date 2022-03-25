@@ -64,14 +64,15 @@ export default class TopCard extends Component {
 					//weather change within the hour
 					return (
 						<p class={style.rightRainForcast}>
-							{forecastHour.condition.text} <br/> 1 hour
+							In 1 hour: <br/>
+							{forecastHour.condition.text}
 						</p>
 					);
 				}
 				return (
 					<p class={style.rightRainForcast}>
-						{" "}
-						{forecastHour.condition.text}  <br/>  {twelveHourCount} hours
+						Coming up in {twelveHourCount} hours: <br/>
+						{forecastHour.condition.text}
 					</p>
 				);
 			}

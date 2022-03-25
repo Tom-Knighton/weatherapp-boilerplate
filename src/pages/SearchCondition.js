@@ -204,12 +204,11 @@ export class SearchCondition extends Component {
 							<div class={style.childRadio}>
 								<input type="radio" value="Rain" name="weather" /> Rain
 								<br />
-								<input type="radio" value="Lightning" name="weather" />{" "}
-								Lightning
+								<input type="radio" value="Lightning" name="weather" /> Lightning
 								<br />
 								<input type="radio" value="Foggy" name="weather" /> Foggy
 								<br/>
-                                <input type="radio" value="All" name="weather" /> All
+                <input type="radio" value="All" name="weather"/> All
 							</div>
 						</div>
 					</div>
