@@ -11,14 +11,14 @@ export default class HourlyForecast extends Component {
 		APIClient.fetchForecastForLocation(3, this.props.loc).then((data) => {
 			this.setState({
 				forecast: data.forecast.forecastday,
-				date: data.location.localtime,
+				localtime: data.location.localtime,
 				currentWeatherIcon: "https://".concat(data.current.condition.icon),
 			});
 		});
 	}
 
 	UpcomingForecasts() {
-		if (!this.state.date) {
+		if (!this.state.localtime) {
 			return;
 		}
 
@@ -32,7 +32,7 @@ export default class HourlyForecast extends Component {
 		// Grab a list of all the 'hour' objects in our array only, and filter them to only include hours in the future
 		const upcomingHours = this.state.forecast
 			.flatMap((fd) => fd.hour)
-			.filter((h) => new Date(h.time) > new Date(this.state.date));
+			.filter((h) => new Date(h.time) > new Date(this.state.localtime));
 
 
 		// For each of these hours, push a div with the relevant information
@@ -52,7 +52,7 @@ export default class HourlyForecast extends Component {
 	render() {
 		return (
 			<Card>
-				{this.state.date && (
+				{this.state.localtime && (
 					<div class={style.horizontal}>
 						<div class={style.row}>
 							<h3>Now</h3>
