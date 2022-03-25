@@ -60,6 +60,7 @@ export default class HomePage extends Component {
 		return null;
 	}
 
+	//update the time state
 	updateTime() {
 		APIClient.fetchWeatherForLocation(this.getLocName()).then((data) => {
 			this.setState({
@@ -68,10 +69,12 @@ export default class HomePage extends Component {
 		});
 	}
 
+	//creating the timer
 	componentDidMount() {
 	  this.interval = setInterval(() => {this.updateTime();}, 60*1000);
 	}
 
+	//removing the timer
 	componentWillUnmount() {
 	  clearInterval(this.interval);
 	}
