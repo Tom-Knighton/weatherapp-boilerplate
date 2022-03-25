@@ -15,6 +15,7 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 				astro: data.forecast.forecastday.map((d) => d.astro),
 				date: data.forecast.forecastday[0].date,
 				dateTomorrow: data.forecast.forecastday[1].date,
+				localtime: data.location.localtime,
 			});
 		});
 	}
@@ -33,11 +34,11 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 
 			features.push({
 				date: new Date(`${date} ${day.sunrise}`),
-				name: "Sunrise",
+				name: "Sunrise/Golden Hour Starts",
 			});
 			features.push({
 				date: new Date(`${date} ${day.sunset}`),
-				name: "Sunset",
+				name: "Sunset/Golden Hour Ends",
 			});
 
 			features.push({
@@ -49,14 +50,14 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 				name: "Moonset",
 			});
 
-			// Calculating golden hours data by subtracting one hour from sunrise/sunset, and adding to features
+			// Calculating golden hours data by adding/subtracting one hour from sunrise/sunset, and adding to features
 			let riseGoldenHourDate = new Date(`${this.state.date} ${day.sunrise}`);
-			riseGoldenHourDate.setHours(riseGoldenHourDate.getHours() - 1);
-			features.push({ date: riseGoldenHourDate, name: "Golden Hour" });
+			riseGoldenHourDate.setHours(riseGoldenHourDate.getHours() + 1);
+			features.push({ date: riseGoldenHourDate, name: "Golden Hour Ends" });
 
 			let setGoldenHourDate = new Date(`${this.state.date} ${day.sunset}`);
 			setGoldenHourDate.setHours(setGoldenHourDate.getHours() - 1);
-			features.push({ date: setGoldenHourDate, name: "Golden Hour" });
+			features.push({ date: setGoldenHourDate, name: "Golden Hour Starts" });
 		});
 
 		// Adds all upcoming weather conditions that are not the same as current conditions
@@ -79,7 +80,7 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 			});
 		});
 
-		features = features.filter((f) => f.date >= new Date()); // Remove golden hours/sunsets etc. that are in past
+		features = features.filter((f) => f.date >= new Date(this.state.localtime)); // Remove golden hours/sunsets etc. that are in past
 		features = features.sort((a, b) => a.date - b.date); // Sort the entire array by date
 
 		// Create a new array, removing any elements of the features array that are the same as the next element
@@ -114,7 +115,7 @@ export default class UpcomingWeatherFeaturesCard extends Component {
 			return ` from ${feature.date.toLocaleTimeString([], dateOptions)}`;
 		}
 
-		const minsBetween = this.getMinsBetween(feature.date, new Date());
+		const minsBetween = this.getMinsBetween(feature.date, new Date(this.state.localtime));
 		switch (true) {
 			case minsBetween >= 0 && minsBetween <= 60:
 				return " in the next hour";
