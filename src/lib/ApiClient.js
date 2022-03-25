@@ -12,7 +12,7 @@ export default {
 	fetchWeatherForLocation(locationName) {
 		return new Promise((resolve, reject) => {
 			this.getLocation().then((loc) => {
-				locationName = locationName ? locationName : loc.name;
+				locationName = locationName ? locationName : loc.name+","+loc.region+","+loc.country;
 				$.ajax({
 					url: `${baseUrl}/current.json?q=${locationName}&aqi=no&key=${apiKey}`,
 					dataType: "json",
@@ -27,7 +27,7 @@ export default {
 	fetchForecastForLocation(days = 10, locationName = null) {
 		return new Promise((resolve, reject) => {
 			this.getLocation().then((loc) => {
-				locationName = locationName ? locationName : loc.name;
+				locationName = locationName ? locationName : loc.name+","+loc.region+","+loc.country;
 				$.ajax({
 					url: `${baseUrl}/forecast.json?q=${locationName}&aqi=yes&alerts=no&days=${days}&key=${apiKey}`,
 					dataType: "json",
@@ -88,6 +88,8 @@ export default {
 							lat,
 							lon,
 							name: data.location.name,
+							country:data.location.country,
+							region: data.location.region,
 							time: data.location.localtime,
 						});
 					},
@@ -109,6 +111,8 @@ export default {
 								lat,
 								lon,
 								name: data.location.name,
+								country:data.location.country,
+								region: data.location.region,
 								time: data.location.localtime,
 							};
 							resolve(this.locationData);
