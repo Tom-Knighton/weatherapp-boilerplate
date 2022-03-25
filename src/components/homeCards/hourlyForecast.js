@@ -32,7 +32,7 @@ export default class HourlyForecast extends Component {
 		// Grab a list of all the 'hour' objects in our array only, and filter them to only include hours in the future
 		const upcomingHours = this.state.forecast
 			.flatMap((fd) => fd.hour)
-			.filter((h) => new Date(h.time) > new Date());
+			.filter((h) => new Date(h.time) > new Date(this.state.date));
 
 
 		// For each of these hours, push a div with the relevant information
@@ -40,16 +40,12 @@ export default class HourlyForecast extends Component {
 			divs.push(
 				<div className={style.row}>
 					<h3>
-						{new Date(upcomingHours[i].time).toLocaleTimeString(
-							[],
-							dateOptions
-						)}
+						{new Date(upcomingHours[i].time).toLocaleTimeString([], dateOptions)}
 					</h3>
 					<img src={`https://${upcomingHours[i].condition.icon}`} alt="error" />
 				</div>
 			);
 		}
-
 		return divs;
 	}
 
